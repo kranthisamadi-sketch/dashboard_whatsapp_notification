@@ -5,6 +5,10 @@ from datetime import datetime
 from twilio.rest import Client
 from apscheduler.schedulers.background import BackgroundScheduler
 import time
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # =============================================================================
 # CONFIGURATION
@@ -12,20 +16,18 @@ import time
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 METABASE_URL = os.getenv("METABASE_URL", "https://metabase.rozana.tech").rstrip("/")
-METABASE_EMAIL = os.getenv("METABASE_EMAIL", "kranthisamadi@gmail.com")
-METABASE_PASSWORD = os.getenv("METABASE_PASSWORD", "CCD88_MvddPmnc")
+METABASE_EMAIL = os.getenv("METABASE_EMAIL")
+METABASE_PASSWORD = os.getenv("METABASE_PASSWORD")
 METABASE_DASHBOARD_ID = os.getenv("METABASE_DASHBOARD_ID", "82")
 
 VERIFY_TLS = os.getenv("METABASE_VERIFY_TLS", "true").lower() != "false"
 
 TABLE_NAME = os.getenv("TABLE_NAME", "Freebies Data store-wise")
-# TWILIO_SID = os.getenv("TWILIO_SID", "AC3e5c87780be233a0f661e8a34f7b97f7")
-# TWILIO_TOKEN = os.getenv("TWILIO_TOKEN", "755e6d50a39289a395a6ba792e8c1616")
-TWILIO__SID=("ACxxxxxxxxxxxxxxxxxxxxx")
-TWILIO_TOKEN=("abcd1234abcd5678")
+TWILIO_SID = os.getenv("TWILIO_SID")
+TWILIO_TOKEN = os.getenv("TWILIO_TOKEN")
 
-FROM_WA = os.getenv("FROM_WA", "whatsapp:+14155238886")
-TO_WA = os.getenv("TO_WA", "whatsapp:+917842507089")
+FROM_WA = os.getenv("FROM_WA")
+TO_WA = os.getenv("TO_WA")
 
 # Alert interval
 try:
@@ -167,6 +169,7 @@ def send_whatsapp_alert():
 
     except Exception as e:
         logging.exception("❌ Failed to send WhatsApp alert: %s", e)
+
 # =============================================================================
 # MAIN LOOP
 # =============================================================================
